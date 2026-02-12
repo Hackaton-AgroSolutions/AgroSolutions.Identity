@@ -9,14 +9,14 @@ on:
 jobs:
   build:
     name: Running the Compilation Job
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Cloning the source code
         uses: actions/checkout@v4
 
       - name: Download the .NET SDK
-        uses: actions/setup-dotnet@v3.4.2
+        uses: actions/setup-dotnet@v5.1.0
         with:
           dotnet-version: 10.0.x
 
