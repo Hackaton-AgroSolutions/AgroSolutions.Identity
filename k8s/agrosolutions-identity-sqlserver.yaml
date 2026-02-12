@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: agrosolutions-identity-sqlserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: agrosolutions-identity-sqlserver
+  template:
+    metadata:
+      labels:
+        app: agrosolutions-identity-sqlserver
+    spec:
+      containers:
+      - name: sqlserver
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        ports:
+        - containerPort: 1433
+        env:
+        - name: ACCEPT_EULA
+          value: "Y"
+        - name: SA_PASSWORD
+          value: "Users!Passw0rd"
+        resources:
+          limits:
+            memory: "1.5Gi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: agrosolutions-identity-sqlserver
+spec:
+  selector:
+    app: agrosolutions-identity-sqlserver
+  ports:
+  - port: 1433
+    targetPort: 1433

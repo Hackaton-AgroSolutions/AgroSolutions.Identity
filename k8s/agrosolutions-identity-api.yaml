@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: agrosolutions-identity-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: agrosolutions-identity-api
+  template:
+    metadata:
+      labels:
+        app: agrosolutions-identity-api
+    spec:
+      containers:
+      - name: agrosolutions-identity-api
+        image: marioguilhermedev/agrosolutions-identity:latest
+        ports:
+        - containerPort: 8080
+
+        envFrom:
+        - configMapRef:
+            name: agrosolutions-identity-config
+        - secretRef:
+            name: agrosolutions-identity-secret
+
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
