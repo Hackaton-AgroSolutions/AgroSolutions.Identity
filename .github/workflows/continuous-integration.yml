@@ -1,0 +1,30 @@
+name: Continuous integration - Compilation and testing phase
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Running the Compilation Job
+    runs-on: self-hosted
+
+    steps:
+      - name: Cloning the source code
+        uses: actions/checkout@v4
+
+      - name: Download the .NET SDK
+        uses: actions/setup-dotnet@v3.4.2
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Download the dependencies (dotnet restore)
+        run: dotnet restore AgroSolutions.Identity.slnx
+
+      - name: Compile the application
+        run: dotnet build AgroSolutions.Identity.slnx
+
+      - name: Execution of unit tests
+        run: dotnet test AgroSolutions.Identity.slnx
