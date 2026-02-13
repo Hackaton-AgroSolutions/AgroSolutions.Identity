@@ -68,4 +68,4 @@ jobs:
       # =========================
       - name: Get Service URL
         run: |
-          minikube service agrosolutions-identity-api --url
+          kubectl port-forward svc/agrosolutions-identity-api 8080:80
