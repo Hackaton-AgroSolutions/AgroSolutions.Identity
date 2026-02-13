@@ -64,10 +64,3 @@ jobs:
       - name: Wait for pods
         run: |
           kubectl wait --for=condition=available deployment --all --timeout=120s
-
-      # =========================
-      # Expose Service
-      # =========================
-      - name: Get Service URL
-        run: |
-          Start-Process kubectl -ArgumentList "port-forward svc/agrosolutions-identity-api 8080:80"
