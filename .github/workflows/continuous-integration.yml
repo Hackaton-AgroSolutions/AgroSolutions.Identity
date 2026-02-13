@@ -1,4 +1,4 @@
-name: Continuous Integration - Compilation and testing phase
+name: CI
 
 on:
   push:
@@ -10,7 +10,6 @@ jobs:
   build:
     name: Running the Compilation Job
     runs-on: ubuntu-latest
-
     steps:
       - name: Cloning the source code
         uses: actions/checkout@v6
