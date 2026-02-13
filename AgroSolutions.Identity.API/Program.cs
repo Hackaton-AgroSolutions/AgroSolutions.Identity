@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi;
-using Microsoft.OpenApi.Models;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
@@ -59,16 +58,12 @@ builder.Services.AddSwaggerGen(c =>
         Description = "Insira o token JWT desta maneira: Bearer {seu token}"
     });
 
-    c.AddSecurityRequirement(new() { {
-        new() {
-            Reference = new() {
-                Type = ReferenceType.SecurityScheme,
-                Id = JwtBearerDefaults.AuthenticationScheme
-            }
-        },
-        Array.Empty<string>()
-    }});
+    c.AddSecurityRequirement(document => new OpenApiSecurityRequirement
+    {
+        [new OpenApiSecuritySchemeReference(JwtBearerDefaults.AuthenticationScheme, document)] = []
+    });
 });
+builder.Services.AddOpenApi();
 
 WebApplication app = builder.Build();
 

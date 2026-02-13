@@ -19,74 +19,77 @@ namespace AgroSolutions.Identity.Infrastructure;
 
 public static class InfrastructureModule
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    extension(IServiceCollection services)
     {
-        services
-            .AddMessageBroker(configuration)
-            .AddAuthentication(configuration)
-            .AddPersistence(configuration)
-            .AddRepositories()
-            .AddUnitOfWork();
+        public IServiceCollection AddInfrastructure(IConfiguration configuration)
+        {
+            services
+                .AddMessageBroker(configuration)
+                .AddAuthentication(configuration)
+                .AddPersistence(configuration)
+                .AddRepositories()
+                .AddUnitOfWork();
 
-        return services;
-    }
+            return services;
+        }
 
-    private static IServiceCollection AddMessageBroker(this IServiceCollection services, IConfiguration configuration)
-    {
-        services.Configure<RabbitMqOptions>(configuration.GetSection("Messaging"));
+        private IServiceCollection AddMessageBroker(IConfiguration configuration)
+        {
+            services.Configure<RabbitMqOptions>(configuration.GetSection("Messaging"));
 
-        services.AddHttpContextAccessor();
-        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddHttpContextAccessor();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-        services.AddSingleton<IRabbitConnectionProvider, RabbitConnectionProvider>();
-        services.AddScoped<IMessagingConnectionFactory, RabbitChannelFactory>();
-        services.AddScoped<IEventPublisher, RabbitMqPublisher>();
+            services.AddSingleton<IRabbitConnectionProvider, RabbitConnectionProvider>();
+            services.AddScoped<IMessagingConnectionFactory, RabbitChannelFactory>();
+            services.AddScoped<IEventPublisher, RabbitMqPublisher>();
 
-        return services;
-    }
+            return services;
+        }
 
-    private static IServiceCollection AddAuthentication(this IServiceCollection services, IConfiguration configuration)
-    {
-        services
-            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
+        private IServiceCollection AddAuthentication(IConfiguration configuration)
+        {
+            services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
                 {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = configuration["Jwt:Issuer"],
-                    ValidAudience = configuration["Jwt:Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Secret"]!))
-                };
-            });
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = configuration["Jwt:Issuer"],
+                        ValidAudience = configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Secret"]!))
+                    };
+                });
 
-        services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IAuthService, AuthService>();
 
-        return services;
-    }
+            return services;
+        }
 
-    private static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
-    {
-        string connectionString = configuration.GetConnectionString("DefaultConnection")!;
-        services.AddDbContext<AgroSolutionsIdentityDbContext>(options => options.UseSqlServer(connectionString));
+        private IServiceCollection AddPersistence(IConfiguration configuration)
+        {
+            string connectionString = configuration.GetConnectionString("DefaultConnection")!;
+            services.AddDbContext<AgroSolutionsIdentityDbContext>(options => options.UseSqlServer(connectionString));
 
-        return services;
-    }
+            return services;
+        }
 
-    private static IServiceCollection AddRepositories(this IServiceCollection services)
-    {
-        services.AddScoped<IUserRepository, UserRepository>();
+        private IServiceCollection AddRepositories()
+        {
+            services.AddScoped<IUserRepository, UserRepository>();
 
-        return services;
-    }
+            return services;
+        }
 
-    private static IServiceCollection AddUnitOfWork(this IServiceCollection services)
-    {
-        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        private IServiceCollection AddUnitOfWork()
+        {
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-        return services;
+            return services;
+        }
     }
 }

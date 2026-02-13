@@ -11,37 +11,40 @@ namespace AgroSolutions.Identity.Application;
 
 public static class ApplicationModule
 {
-    public static IServiceCollection AddApplication(this IServiceCollection services)
+    extension(IServiceCollection services)
     {
-        services
-            .AddMediatR()
-            .AddFluentValidation()
-            .AddNotification();
+        public IServiceCollection AddApplication()
+        {
+            services
+                .AddMediatR()
+                .AddFluentValidation()
+                .AddNotification();
 
-        return services;
-    }
+            return services;
+        }
 
-    private static IServiceCollection AddMediatR(this IServiceCollection services)
-    {
-        services.AddMediatR(config => config.RegisterServicesFromAssemblyContaining<GetUserByEmailAndPasswordQuery>());
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+        private IServiceCollection AddMediatR()
+        {
+            services.AddMediatR(config => config.RegisterServicesFromAssemblyContaining<GetUserByEmailAndPasswordQuery>());
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
-        return services;
-    }
+            return services;
+        }
 
-    private static IServiceCollection AddFluentValidation(this IServiceCollection services)
-    {
-        services
-            .AddFluentValidationAutoValidation(o => o.DisableDataAnnotationsValidation = true)
-            .AddValidatorsFromAssemblyContaining<GetUserByEmailAndPasswordQueryValidator>();
+        private IServiceCollection AddFluentValidation()
+        {
+            services
+                .AddFluentValidationAutoValidation(o => o.DisableDataAnnotationsValidation = true)
+                .AddValidatorsFromAssemblyContaining<GetUserByEmailAndPasswordQueryValidator>();
 
-        return services;
-    }
+            return services;
+        }
 
-    private static IServiceCollection AddNotification(this IServiceCollection services)
-    {
-        services.AddScoped<INotificationContext, NotificationContext>();
+        private IServiceCollection AddNotification()
+        {
+            services.AddScoped<INotificationContext, NotificationContext>();
 
-        return services;
+            return services;
+        }
     }
 }

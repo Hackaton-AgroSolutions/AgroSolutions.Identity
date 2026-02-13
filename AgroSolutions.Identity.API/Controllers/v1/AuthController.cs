@@ -24,7 +24,7 @@ public partial class AuthController(IMediator mediator) : ControllerBase
     public async Task<OkObjectResult> Me()
     {
         Log.Information("Starting Action {ActionName}.", nameof(Me));
-        GetUserByIdQuery query = new(User.UserId());
+        GetUserByIdQuery query = new(User.UserId);
         GetUserByIdResult? getUserByIdResult = await _mediator.Send(query);
         return Ok(getUserByIdResult);
     }
@@ -52,7 +52,7 @@ public partial class AuthController(IMediator mediator) : ControllerBase
     public async Task<OkObjectResult> Update(UpdateUserInputModel inputModel)
     {
         Log.Information("Starting Action {ActionName}.", nameof(Update));
-        UpdateUserCommand command = new(User.UserId(), inputModel.Name, inputModel.Email);
+        UpdateUserCommand command = new(User.UserId, inputModel.Name, inputModel.Email);
         TokenDto? tokenDto = await _mediator.Send(command);
         return Ok(tokenDto);
     }
@@ -62,7 +62,7 @@ public partial class AuthController(IMediator mediator) : ControllerBase
     public async Task<AcceptedResult> Delete()
     {
         Log.Information("Starting Action {ActionName}.", nameof(Delete));
-        DeleteUserCommand command = new(User.UserId());
+        DeleteUserCommand command = new(User.UserId);
         await _mediator.Send(command);
         return Accepted();
     }

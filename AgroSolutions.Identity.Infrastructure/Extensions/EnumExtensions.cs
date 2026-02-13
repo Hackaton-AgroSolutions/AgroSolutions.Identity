@@ -5,10 +5,13 @@ namespace AgroSolutions.Identity.Infrastructure.Extensions;
 
 public static class EnumExtensions
 {
-    public static string GetDescription(this Enum @enum)
+    extension(Enum @enum)
     {
-        FieldInfo? field = @enum.GetType().GetField(@enum.ToString()!);
-        DescriptionAttribute? attribute = field?.GetCustomAttribute<DescriptionAttribute>();
-        return attribute?.Description ?? @enum.ToString();
+        public string GetDescription()
+        {
+            FieldInfo? field = @enum.GetType().GetField(@enum.ToString()!);
+            DescriptionAttribute? attribute = field?.GetCustomAttribute<DescriptionAttribute>();
+            return attribute?.Description ?? @enum.ToString();
+        }
     }
 }
