@@ -13,7 +13,9 @@ jobs:
 
     steps:
       - name: Cloning the source code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          set-safe-directory: false
 
       - name: Download the .NET SDK
         uses: actions/setup-dotnet@v5.1.0
