@@ -51,7 +51,10 @@ jobs:
       # =========================
       - name: Start Minikube
         run: |
-          minikube status || minikube start --driver=docker
+          $status = minikube status --format "{{.Host}}"
+          if ($status -ne "Running") {
+            minikube start --driver=docker
+          }
 
       # =========================
       # Wait pods
