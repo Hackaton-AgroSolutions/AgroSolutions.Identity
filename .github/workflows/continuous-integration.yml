@@ -1,4 +1,4 @@
-name: Continuous integration - Compilation and testing phase
+name: Continuous Integration - Compilation and testing phase
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     name: Running the Compilation Job
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
       - name: Cloning the source code
