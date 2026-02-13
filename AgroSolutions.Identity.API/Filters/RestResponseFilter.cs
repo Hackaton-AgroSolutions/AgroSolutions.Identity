@@ -1,9 +1,8 @@
 ﻿using AgroSolutions.Identity.API.Responses;
 using AgroSolutions.Identity.Domain.Notifications;
+using AgroSolutions.Identity.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using AgroSolutions.Identity.API.Extensions;
-using AgroSolutions.Identity.Infrastructure.Extensions;
 
 namespace AgroSolutions.Identity.API.Filters;
 
