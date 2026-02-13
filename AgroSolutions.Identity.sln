@@ -1,0 +1,56 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.3.11505.172 d18.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgroSolutions.Identity.API", "AgroSolutions.Identity.API\AgroSolutions.Identity.API.csproj", "{0A524F89-4AE4-4152-970D-DA5A87ADDFC4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgroSolutions.Identity.Application", "AgroSolutions.Identity.Application\AgroSolutions.Identity.Application.csproj", "{79627BA9-6F2E-4D80-B1D7-F0CC576433C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgroSolutions.Identity.Domain", "AgroSolutions.Identity.Domain\AgroSolutions.Identity.Domain.csproj", "{A0227F3A-397C-4DF7-9433-DA2CF20FB6B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgroSolutions.Identity.Infrastructure", "AgroSolutions.Identity.Infrastructure\AgroSolutions.Identity.Infrastructure.csproj", "{EC643C20-28B2-4BCB-8F2A-23CEC11EB94E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgroSolutions.Identity.Tests", "AgroSolutions.Identity.Tests\AgroSolutions.Identity.Tests.csproj", "{476B0AB9-4A6B-4759-BC73-AA7D9E509A6C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "k8s", "k8s", "{C213E783-1B70-4C9F-B138-0D9E4E53260B}"
+	ProjectSection(SolutionItems) = preProject
+		k8s\agrosolutions-identity-api.yaml = k8s\agrosolutions-identity-api.yaml
+		k8s\agrosolutions-identity-configmap.yaml = k8s\agrosolutions-identity-configmap.yaml
+		k8s\agrosolutions-identity-hpa.yaml = k8s\agrosolutions-identity-hpa.yaml
+		k8s\agrosolutions-identity-secret.yaml = k8s\agrosolutions-identity-secret.yaml
+		k8s\agrosolutions-identity-service.yaml = k8s\agrosolutions-identity-service.yaml
+		k8s\agrosolutions-identity-sqlserver.yaml = k8s\agrosolutions-identity-sqlserver.yaml
+		k8s\rabbitmq.yaml = k8s\rabbitmq.yaml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0A524F89-4AE4-4152-970D-DA5A87ADDFC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A524F89-4AE4-4152-970D-DA5A87ADDFC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A524F89-4AE4-4152-970D-DA5A87ADDFC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A524F89-4AE4-4152-970D-DA5A87ADDFC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79627BA9-6F2E-4D80-B1D7-F0CC576433C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79627BA9-6F2E-4D80-B1D7-F0CC576433C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79627BA9-6F2E-4D80-B1D7-F0CC576433C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79627BA9-6F2E-4D80-B1D7-F0CC576433C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0227F3A-397C-4DF7-9433-DA2CF20FB6B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0227F3A-397C-4DF7-9433-DA2CF20FB6B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0227F3A-397C-4DF7-9433-DA2CF20FB6B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0227F3A-397C-4DF7-9433-DA2CF20FB6B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC643C20-28B2-4BCB-8F2A-23CEC11EB94E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC643C20-28B2-4BCB-8F2A-23CEC11EB94E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC643C20-28B2-4BCB-8F2A-23CEC11EB94E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC643C20-28B2-4BCB-8F2A-23CEC11EB94E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{476B0AB9-4A6B-4759-BC73-AA7D9E509A6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{476B0AB9-4A6B-4759-BC73-AA7D9E509A6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{476B0AB9-4A6B-4759-BC73-AA7D9E509A6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{476B0AB9-4A6B-4759-BC73-AA7D9E509A6C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
