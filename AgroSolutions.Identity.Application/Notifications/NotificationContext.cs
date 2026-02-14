@@ -16,7 +16,8 @@ public sealed class NotificationContext : INotificationContext
         .GroupBy(v => v.Item1)
         .ToDictionary(g => g.Key, g => g.Select(n => n.Item2).ToArray());
 
-    public void AddNotification(NotificationType notificationType) => _notifications.Add(new(notificationType));
+    public void AddNotification(NotificationType notificationType, IEnumerable<object>? @params = default)
+        => _notifications.Add(new(notificationType, @params));
 
     public void AddValidation(string key, string value) => _validations.Add(new(key, value));
 }

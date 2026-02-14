@@ -1,7 +1,6 @@
 ﻿namespace AgroSolutions.Identity.API.Responses;
 
-public record RestResponse
+public record RestResponse(object? Data = default)
 {
-    public object? Data { get; init; }
     public IEnumerable<string> Notifications { get; init; } = [];
-};
+}

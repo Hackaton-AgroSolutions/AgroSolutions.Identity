@@ -8,6 +8,6 @@ public interface INotificationContext
     IReadOnlyCollection<Notification> Notifications { get; }
     Dictionary<string, string[]> Validations { get; }
 
-    void AddNotification(NotificationType notificationCode);
+    void AddNotification(NotificationType notificationCode, IEnumerable<object>? @params = default);
     void AddValidation(string field, string error);
 }

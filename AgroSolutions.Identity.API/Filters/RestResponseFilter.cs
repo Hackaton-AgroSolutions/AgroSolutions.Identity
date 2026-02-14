@@ -1,8 +1,9 @@
-﻿using AgroSolutions.Identity.API.Responses;
+﻿using AgroSolutions.Identity.API.Extensions;
+using AgroSolutions.Identity.API.Responses;
 using AgroSolutions.Identity.Domain.Notifications;
-using AgroSolutions.Identity.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using System.Net;
 
 namespace AgroSolutions.Identity.API.Filters;
 
@@ -19,39 +20,33 @@ public class RestResponseFilter(INotificationContext notification) : IAsyncResul
             return;
         }
 
-        if (_notification.HasNotifications)
+        if (context.Result is NoContentResult || context.Result is AcceptedResult)
         {
-            context.Result = new ObjectResult(new RestResponse { Notifications = _notification.Notifications.Select(n => n.Type!.GetDescription()) })
+            await next();
+            return;
+        }
+
+        if (context.Result is ObjectResult objectResult && objectResult.StatusCode >= 200 && objectResult.StatusCode < 300)
+        {
+            if (objectResult.Value is not null)
             {
-                StatusCode = MapStatusCode(_notification.Notifications)
-            };
-            await next();
-            return;
-        }
+                RestResponse restResponse = new(objectResult.Value);
 
-        if (context.Result is NoContentResult)
-        {
-            await next();
-            return;
-        }
-
-        switch (context.Result)
-        {
-            case CreatedAtActionResult created:
-                created.Value = new RestResponse { Data = created.Value };
-                break;
-
-            case AcceptedResult accepted:
-                accepted.Value = default;
-                break;
-
-            case OkObjectResult ok:
-                ok.Value = new RestResponse { Data = ok.Value! };
-                break;
-
-            case ObjectResult obj when obj.StatusCode is >= 200 and < 300:
-                obj.Value = new RestResponse { Data = obj.Value! };
-                break;
+                if (_notification.HasNotifications)
+                {
+                    objectResult.StatusCode = (int)HttpStatusCode.MultiStatus;
+                    objectResult.Value = restResponse with { Notifications = _notification.AsListString };
+                }
+                else
+                    objectResult.Value = restResponse;
+            }
+            else
+            {
+                context.Result = new ObjectResult(new RestResponse { Notifications = _notification.AsListString })
+                {
+                    StatusCode = MapStatusCode(_notification.Notifications)
+                };
+            }
         }
 
         await next();
