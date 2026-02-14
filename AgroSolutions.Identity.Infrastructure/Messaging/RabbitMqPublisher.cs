@@ -9,7 +9,6 @@ using RabbitMQ.Client;
 using Serilog;
 using System.Text;
 using System.Text.Json;
-using static AgroSolutions.Identity.Infrastructure.Messaging.RabbitMqOptions;
 
 namespace AgroSolutions.Identity.Infrastructure.Messaging;
 
@@ -27,16 +26,21 @@ public class RabbitMqPublisher(IMessagingConnectionFactory factory, IOptions<Rab
             correlationId = stringValues.ToString();
         }
         BasicProperties basicProperties = new() { CorrelationId = correlationId };
-        RabbitMqDestination rabbitMqDestination;
+        string? routingKey = default;
+        byte[]? body = default;
 
         switch (domainEvent)
         {
             case DeletedUserEvent deletedUser:
-                rabbitMqDestination = _rabbitMqOptions.Destinations.First(d => d.Id.Equals(EventType.DeletedUser.GetDescription(), StringComparison.OrdinalIgnoreCase));
-                Log.Information("Adding the user deletion event with ID {UserId} to the RabbitMQ queue {Queue}.", deletedUser.UserId, rabbitMqDestination.Queue);
-                byte[] body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(deletedUser));
-                await channel.BasicPublishAsync(_rabbitMqOptions.Exchange, rabbitMqDestination.RoutingKey, false, basicProperties, body, cancellationToken);
+                body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(deletedUser));
+                routingKey = GetRoutingKeyByEventType(EventType.DeletedUser);
+                Log.Information("Adding the user deletion event with ID {UserId} to the RoutingKey {RoutingKey}.", deletedUser.UserId, routingKey);
                 break;
         }
+
+        await channel.BasicPublishAsync(_rabbitMqOptions.Exchange, routingKey!, false, basicProperties, body, cancellationToken);
     }
+
+    private string? GetRoutingKeyByEventType(EventType eventType)
+        => _rabbitMqOptions.Destinations.FirstOrDefault(d => d.Id.Equals(eventType.GetDescription(), StringComparison.OrdinalIgnoreCase))?.RoutingKey;
 }
