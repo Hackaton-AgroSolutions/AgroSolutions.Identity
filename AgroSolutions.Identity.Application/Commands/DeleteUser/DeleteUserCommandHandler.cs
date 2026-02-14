@@ -25,7 +25,7 @@ public class DeleteUserCommandHandler(INotificationContext notification, IUnitOf
             _notification.AddNotification(NotificationType.UserNotFound);
             return null;
         }
-        
+
         Log.Information("Initiating the process of deleting the user with ID {UserId} from the database and adding them to the queue.", request.UserId);
         await _unitOfWork.BeginTransactionAsync(cancellationToken);
         _unitOfWork.Users.Delete(user);

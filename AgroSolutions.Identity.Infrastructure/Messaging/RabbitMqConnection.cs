@@ -1,4 +1,5 @@
 ﻿using RabbitMQ.Client;
+using static AgroSolutions.Identity.Infrastructure.Messaging.RabbitMqOptions;
 
 namespace AgroSolutions.Identity.Infrastructure.Messaging;
 
