@@ -1,12 +1,9 @@
 ﻿using AgroSolutions.Identity.Application.Commands.DeleteUser;
-using AgroSolutions.Identity.Application.Commands.UpdateUser;
-using AgroSolutions.Identity.Application.DTOs;
 using AgroSolutions.Identity.Domain.Common;
 using AgroSolutions.Identity.Domain.Entities;
 using AgroSolutions.Identity.Domain.Messaging;
 using AgroSolutions.Identity.Domain.Notifications;
 using AgroSolutions.Identity.Domain.Repositories;
-using AgroSolutions.Identity.Domain.Service;
 using AgroSolutions.Identity.Infrastructure.Persistence;
 using FluentAssertions;
 using MediatR;
@@ -49,7 +46,7 @@ public class DeleteUserCommandHandlerTests
         _unitOfWork.Verify(u => u.CommitAsync(It.IsAny<CancellationToken>()), Times.Once);
         _eventPublisher.Verify(u => u.PublishAsync(It.IsAny<IDomainEvent>(), It.IsAny<CancellationToken>()), Times.Once);
     }
-    
+
     [Fact(DisplayName = "Should notify and return null when user is not found")]
     public async Task Should_ReturnNullAndNotify_WhenUserIsNotFound()
     {

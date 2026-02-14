@@ -1,8 +1,5 @@
-﻿using AgroSolutions.Identity.Application.Commands.CreateUser;
-using AgroSolutions.Identity.Application.Commands.UpdateUser;
-using AgroSolutions.Identity.Application.Queries.GetUserById;
+﻿using AgroSolutions.Identity.Application.Queries.GetUserById;
 using FluentAssertions;
-using FluentValidation;
 using FluentValidation.Results;
 
 namespace AgroSolutions.Identity.Tests.Validators;

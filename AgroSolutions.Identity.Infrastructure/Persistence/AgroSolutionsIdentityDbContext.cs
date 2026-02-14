@@ -1,7 +1,5 @@
-﻿using AgroSolutions.Identity.Domain.Common;
-using AgroSolutions.Identity.Domain.Entities;
+﻿using AgroSolutions.Identity.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Reflection;
 
 namespace AgroSolutions.Identity.Infrastructure.Persistence;

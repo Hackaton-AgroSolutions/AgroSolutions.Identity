@@ -1,5 +1,4 @@
-﻿using AgroSolutions.Identity.Application.Commands.CreateUser;
-using AgroSolutions.Identity.Application.Commands.UpdateUser;
+﻿using AgroSolutions.Identity.Application.Commands.UpdateUser;
 using AgroSolutions.Identity.Application.DTOs;
 using AgroSolutions.Identity.Domain.Entities;
 using AgroSolutions.Identity.Domain.Notifications;

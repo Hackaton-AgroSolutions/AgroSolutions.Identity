@@ -1,5 +1,4 @@
-﻿using AgroSolutions.Identity.Application;
-using FluentValidation;
+﻿using FluentValidation;
 using Serilog;
 
 namespace AgroSolutions.Identity.Application.Commands.DeleteUser;

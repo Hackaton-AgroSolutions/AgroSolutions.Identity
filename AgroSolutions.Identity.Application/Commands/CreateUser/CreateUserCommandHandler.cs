@@ -1,9 +1,9 @@
-﻿using AgroSolutions.Identity.Domain.Entities;
+﻿using AgroSolutions.Identity.Application.DTOs;
+using AgroSolutions.Identity.Domain.Entities;
 using AgroSolutions.Identity.Domain.Notifications;
 using AgroSolutions.Identity.Domain.Service;
 using AgroSolutions.Identity.Infrastructure.Persistence;
 using MediatR;
-using AgroSolutions.Identity.Application.DTOs;
 using Serilog;
 
 namespace AgroSolutions.Identity.Application.Commands.CreateUser;

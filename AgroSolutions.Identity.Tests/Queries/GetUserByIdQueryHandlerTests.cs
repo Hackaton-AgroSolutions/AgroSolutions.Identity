@@ -1,10 +1,7 @@
-﻿using AgroSolutions.Identity.Application.DTOs;
-using AgroSolutions.Identity.Application.Queries.GetUserByEmailAndPassword;
-using AgroSolutions.Identity.Application.Queries.GetUserById;
+﻿using AgroSolutions.Identity.Application.Queries.GetUserById;
 using AgroSolutions.Identity.Domain.Entities;
 using AgroSolutions.Identity.Domain.Notifications;
 using AgroSolutions.Identity.Domain.Repositories;
-using AgroSolutions.Identity.Domain.Service;
 using AgroSolutions.Identity.Infrastructure.Persistence;
 using FluentAssertions;
 using Moq;

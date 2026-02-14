@@ -1,5 +1,4 @@
-﻿using AgroSolutions.Identity.Application;
-using AgroSolutions.Identity.Domain.Notifications;
+﻿using AgroSolutions.Identity.Domain.Notifications;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;

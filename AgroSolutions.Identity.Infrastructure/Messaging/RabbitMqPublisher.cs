@@ -2,7 +2,6 @@
 using AgroSolutions.Identity.Domain.Events;
 using AgroSolutions.Identity.Domain.Messaging;
 using AgroSolutions.Identity.Infrastructure.Extensions;
-using Azure.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;

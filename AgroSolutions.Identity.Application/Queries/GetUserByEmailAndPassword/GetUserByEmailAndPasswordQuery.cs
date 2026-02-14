@@ -1,5 +1,5 @@
-﻿using MediatR;
-using AgroSolutions.Identity.Application.DTOs;
+﻿using AgroSolutions.Identity.Application.DTOs;
+using MediatR;
 
 namespace AgroSolutions.Identity.Application.Queries.GetUserByEmailAndPassword;
 
