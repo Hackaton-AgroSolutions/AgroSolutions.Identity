@@ -8,11 +8,11 @@ public class RabbitMqOptions
     public string Password { get; set; } = default!;
     public string Exchange { get; set; } = default!;
     public IEnumerable<RabbitMqDestination> Destinations { get; set; } = [];
-}
 
-public class RabbitMqDestination
-{
-    public string Id { get; set; } = default!;
-    public string Queue { get; set; } = default!;
-    public string RoutingKey { get; set; } = default!;
+    public class RabbitMqDestination
+    {
+        public string Id { get; set; } = default!;
+        public string Queue { get; set; } = default!;
+        public string RoutingKey { get; set; } = default!;
+    }
 }
