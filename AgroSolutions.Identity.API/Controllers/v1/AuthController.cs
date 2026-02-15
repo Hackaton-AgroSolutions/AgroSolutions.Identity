@@ -30,8 +30,8 @@ public partial class AuthController(IMediator mediator) : ControllerBase
     {
         Log.Information("Starting Action {ActionName}.", nameof(Me));
         GetUserQuery query = new(User.UserId);
-        GetUserQueryResult? getUserByIdResult = await _mediator.Send(query);
-        return Ok(getUserByIdResult);
+        GetUserQueryResult? getUserQueryResult = await _mediator.Send(query);
+        return Ok(getUserQueryResult);
     }
 
     [Authorize]
