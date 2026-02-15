@@ -87,7 +87,7 @@ try
 {
     IMessagingConnectionFactory factory = services.GetRequiredService<IMessagingConnectionFactory>();
     IOptions<RabbitMqOptions> options = services.GetRequiredService<IOptions<RabbitMqOptions>>();
-    await RabbitMqConnection.InitializeAsync(await factory.CreateChannelAsync(), options.Value);
+    await RabbitMqConnection.InitializeAsync(await factory.CreateChannelAsync(CancellationToken.None), options.Value);
 }
 catch (Exception ex)
 {

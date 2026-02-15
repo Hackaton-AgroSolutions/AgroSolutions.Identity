@@ -6,15 +6,15 @@ using AgroSolutions.Identity.Infrastructure.Persistence;
 using MediatR;
 using Serilog;
 
-namespace AgroSolutions.Identity.Application.Queries.GetUserByEmailAndPassword;
+namespace AgroSolutions.Identity.Application.Queries.AuthenticateUser;
 
-public class GetUserByEmailAndPasswordQueryHandler(IUnitOfWork unitOfWork, IAuthService authService, INotificationContext notification) : IRequestHandler<GetUserByEmailAndPasswordQuery, TokenDto?>
+public class AuthenticateUserQueryHandler(IUnitOfWork unitOfWork, IAuthService authService, INotificationContext notification) : IRequestHandler<AuthenticateUserQuery, TokenDto?>
 {
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IAuthService _authService = authService;
     private readonly INotificationContext _notification = notification;
 
-    public async Task<TokenDto?> Handle(GetUserByEmailAndPasswordQuery request, CancellationToken cancellationToken)
+    public async Task<TokenDto?> Handle(AuthenticateUserQuery request, CancellationToken cancellationToken)
     {
         Log.Information("Starting user login.");
 

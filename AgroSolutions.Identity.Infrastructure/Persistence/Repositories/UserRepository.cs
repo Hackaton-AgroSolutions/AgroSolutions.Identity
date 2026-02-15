@@ -16,7 +16,12 @@ public class UserRepository(AgroSolutionsIdentityDbContext dbContext) : IUserRep
     public void Delete(User user) => _dbContext.Users.Remove(user);
 
     public Task<bool> ExistsByEmailExceptByUserIdAsync(string email, int userId, CancellationToken cancellationToken) => _dbContext.Users
+        .AsNoTracking()
         .AnyAsync(u => u.Email.ToUpper() == email.ToUpper() && u.UserId != userId, cancellationToken);
+
+    public Task<bool> ExistsByIdAsync(int userId, CancellationToken cancellationToken) => _dbContext.Users
+        .AsNoTracking()
+        .AnyAsync(user => user.UserId == userId, cancellationToken);
 
     public Task<User?> GetByEmailNoTrackingAsync(string email, CancellationToken cancellationToken) => _dbContext.Users
         .AsNoTracking()

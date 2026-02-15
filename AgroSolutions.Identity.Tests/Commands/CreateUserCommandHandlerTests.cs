@@ -6,6 +6,7 @@ using AgroSolutions.Identity.Domain.Repositories;
 using AgroSolutions.Identity.Domain.Service;
 using AgroSolutions.Identity.Infrastructure.Persistence;
 using FluentAssertions;
+using Microsoft.Extensions.Caching.Memory;
 using Moq;
 
 namespace AgroSolutions.Identity.Tests.Commands;
@@ -16,6 +17,7 @@ public class CreateUserCommandHandlerTests
     private readonly Mock<IUnitOfWork> _unitOfWork = new();
     private readonly Mock<IAuthService> _authService = new();
     private readonly Mock<IUserRepository> _userRepository = new();
+    private readonly Mock<IMemoryCache> _memoryCache = new();
     private readonly CreateUserCommandHandler _commandHandler;
 
     public CreateUserCommandHandlerTests()
@@ -24,7 +26,8 @@ public class CreateUserCommandHandlerTests
         _commandHandler = new(
             _notificationContext.Object,
             _unitOfWork.Object,
-            _authService.Object
+            _authService.Object,
+            _memoryCache.Object
         );
     }
 
@@ -34,6 +37,7 @@ public class CreateUserCommandHandlerTests
         // Arrange
         CreateUserCommand createUserCommand = new("Valid Name User", "validEmail@gmail.com", "F4hHW#7G40,!");
         _unitOfWork.Setup(u => u.Users.IsEmailInUseAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(false);
+        _memoryCache.Setup(m => m.CreateEntry(It.IsAny<object>())).Returns(Mock.Of<ICacheEntry>);
         _authService.Setup(a => a.GenerateToken(It.IsAny<User>())).Returns("eyJb");
 
         // Act

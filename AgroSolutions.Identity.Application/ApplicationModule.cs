@@ -1,6 +1,6 @@
 ﻿using AgroSolutions.Identity.Application.Behaviors;
 using AgroSolutions.Identity.Application.Notifications;
-using AgroSolutions.Identity.Application.Queries.GetUserByEmailAndPassword;
+using AgroSolutions.Identity.Application.Queries.AuthenticateUser;
 using AgroSolutions.Identity.Domain.Notifications;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -25,7 +25,7 @@ public static class ApplicationModule
 
         private IServiceCollection AddMediatR()
         {
-            services.AddMediatR(config => config.RegisterServicesFromAssemblyContaining<GetUserByEmailAndPasswordQuery>());
+            services.AddMediatR(config => config.RegisterServicesFromAssemblyContaining<AuthenticateUserQuery>());
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
             return services;
@@ -35,7 +35,7 @@ public static class ApplicationModule
         {
             services
                 .AddFluentValidationAutoValidation(o => o.DisableDataAnnotationsValidation = true)
-                .AddValidatorsFromAssemblyContaining<GetUserByEmailAndPasswordQueryValidator>();
+                .AddValidatorsFromAssemblyContaining<AuthenticateUserQueryValidator>();
 
             return services;
         }

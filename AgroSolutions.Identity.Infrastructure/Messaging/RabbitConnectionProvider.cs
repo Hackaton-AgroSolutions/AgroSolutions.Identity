@@ -21,16 +21,16 @@ public class RabbitConnectionProvider : IRabbitConnectionProvider
         };
     }
 
-    public async Task<IConnection> GetConnectionAsync()
+    public async Task<IConnection> GetConnectionAsync(CancellationToken cancellationToken)
     {
         if (_connection is not null && _connection.IsOpen)
             return _connection;
 
-        await _lock.WaitAsync();
+        await _lock.WaitAsync(cancellationToken);
         try
         {
             if (_connection is null || !_connection.IsOpen)
-                _connection = await _factory.CreateConnectionAsync();
+                _connection = await _factory.CreateConnectionAsync(cancellationToken);
 
             return _connection;
         }

@@ -7,6 +7,7 @@ using AgroSolutions.Identity.Domain.Repositories;
 using AgroSolutions.Identity.Infrastructure.Persistence;
 using FluentAssertions;
 using MediatR;
+using Microsoft.Extensions.Caching.Memory;
 using Moq;
 
 namespace AgroSolutions.Identity.Tests.Commands;
@@ -17,6 +18,7 @@ public class DeleteUserCommandHandlerTests
     private readonly Mock<IUnitOfWork> _unitOfWork = new();
     private readonly Mock<IUserRepository> _userRepository = new();
     private readonly Mock<IEventPublisher> _eventPublisher = new();
+    private readonly Mock<IMemoryCache> _memoryCache = new();
     private readonly DeleteUserCommandHandler _commandHandler;
 
     public DeleteUserCommandHandlerTests()
@@ -25,7 +27,8 @@ public class DeleteUserCommandHandlerTests
         _commandHandler = new(
             _notificationContext.Object,
             _unitOfWork.Object,
-            _eventPublisher.Object
+            _eventPublisher.Object,
+            _memoryCache.Object
         );
     }
 

@@ -19,7 +19,7 @@ public class RabbitMqPublisher(IMessagingConnectionFactory factory, IOptions<Rab
 
     public async Task PublishAsync(IDomainEvent domainEvent, CancellationToken cancellationToken, string? correlationId = default)
     {
-        IChannel channel = await _factory.CreateChannelAsync();
+        IChannel channel = await _factory.CreateChannelAsync(cancellationToken);
         if (httpContextAccessor.HttpContext is not null)
         {
             httpContextAccessor.HttpContext!.Response.Headers.TryGetValue("X-Correlation-ID", out StringValues stringValues);

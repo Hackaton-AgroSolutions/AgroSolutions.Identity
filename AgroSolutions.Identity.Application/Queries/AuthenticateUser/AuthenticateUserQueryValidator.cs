@@ -1,13 +1,13 @@
 ﻿using FluentValidation;
 using Serilog;
 
-namespace AgroSolutions.Identity.Application.Queries.GetUserByEmailAndPassword;
+namespace AgroSolutions.Identity.Application.Queries.AuthenticateUser;
 
-public class GetUserByEmailAndPasswordQueryValidator : AbstractValidator<GetUserByEmailAndPasswordQuery>
+public class AuthenticateUserQueryValidator : AbstractValidator<AuthenticateUserQuery>
 {
-    public GetUserByEmailAndPasswordQueryValidator()
+    public AuthenticateUserQueryValidator()
     {
-        Log.Information("Starting the validator {ValidatorName}.", nameof(GetUserByEmailAndPasswordQueryValidator));
+        Log.Information("Starting the validator {ValidatorName}.", nameof(AuthenticateUserQueryValidator));
 
         RuleLevelCascadeMode = CascadeMode.Stop;
 

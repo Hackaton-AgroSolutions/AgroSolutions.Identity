@@ -1,4 +1,4 @@
-﻿using AgroSolutions.Identity.Application.Queries.GetUserById;
+﻿using AgroSolutions.Identity.Application.Queries.GetUser;
 using FluentAssertions;
 using FluentValidation.Results;
 
@@ -10,10 +10,10 @@ public class GetUserByIdQueryTests
     public void Should_BeValid_WhenQueryIsValid()
     {
         // Arrange
-        GetUserByIdQuery getUserByIdQuery = new(1);
+        GetUserQuery getUserByIdQuery = new(1);
 
         // Act
-        ValidationResult result = new GetUserByIdQueryValidator().Validate(getUserByIdQuery);
+        ValidationResult result = new GetUserQueryValidator().Validate(getUserByIdQuery);
 
         // Assert
         result.IsValid.Should().BeTrue();
@@ -24,10 +24,10 @@ public class GetUserByIdQueryTests
     public void Should_BeInvalid_WhenQueryIsInvalid()
     {
         // Arrange
-        GetUserByIdQuery getUserByIdQuery = new(-21);
+        GetUserQuery getUserByIdQuery = new(-21);
 
         // Act
-        ValidationResult result = new GetUserByIdQueryValidator().Validate(getUserByIdQuery);
+        ValidationResult result = new GetUserQueryValidator().Validate(getUserByIdQuery);
 
         // Assert
         result.IsValid.Should().BeFalse();

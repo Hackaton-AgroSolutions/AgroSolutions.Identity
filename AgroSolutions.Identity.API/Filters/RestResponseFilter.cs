@@ -20,8 +20,12 @@ public class RestResponseFilter(INotificationContext notification) : IAsyncResul
             return;
         }
 
-        if (context.Result is NoContentResult || context.Result is AcceptedResult)
+        if ((context.Result is NoContentResult || context.Result is AcceptedResult) && _notification.HasNotifications)
         {
+            context.Result = new ObjectResult(new RestResponse { Notifications = _notification.AsListString })
+            {
+                StatusCode = MapStatusCode(_notification.Notifications)
+            };
             await next();
             return;
         }
@@ -55,6 +59,12 @@ public class RestResponseFilter(INotificationContext notification) : IAsyncResul
     private static int MapStatusCode(IReadOnlyCollection<Notification> notifications)
     {
         if (notifications.Any(n => n.Type == NotificationType.InvalidCredentialsError))
+            return StatusCodes.Status401Unauthorized;
+
+        if (notifications.Any(n => n.Type == NotificationType.UserNotFound))
+            return StatusCodes.Status401Unauthorized;
+
+        if (notifications.Any(n => n.Type == NotificationType.UserNoLongerExists))
             return StatusCodes.Status401Unauthorized;
 
         if (notifications.Any(n => n.Type == NotificationType.EmailAlreadyInUse))

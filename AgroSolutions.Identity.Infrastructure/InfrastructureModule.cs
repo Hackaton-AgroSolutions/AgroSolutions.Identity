@@ -23,6 +23,7 @@ public static class InfrastructureModule
         {
             services
                 .AddMessageBroker(configuration)
+                .AddCacheService()
                 .AddAuthentication(configuration)
                 .AddPersistence(configuration)
                 .AddRepositories()
@@ -41,6 +42,13 @@ public static class InfrastructureModule
             services.AddSingleton<IRabbitConnectionProvider, RabbitConnectionProvider>();
             services.AddScoped<IMessagingConnectionFactory, RabbitChannelFactory>();
             services.AddScoped<IEventPublisher, RabbitMqPublisher>();
+
+            return services;
+        }
+
+        private IServiceCollection AddCacheService()
+        {
+            services.AddMemoryCache();
 
             return services;
         }

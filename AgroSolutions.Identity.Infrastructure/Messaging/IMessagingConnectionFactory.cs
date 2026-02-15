@@ -4,5 +4,5 @@ namespace AgroSolutions.Identity.Infrastructure.Messaging;
 
 public interface IMessagingConnectionFactory
 {
-    Task<IChannel> CreateChannelAsync();
+    Task<IChannel> CreateChannelAsync(CancellationToken cancellationToken);
 }

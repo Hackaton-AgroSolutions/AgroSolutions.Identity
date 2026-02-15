@@ -4,14 +4,14 @@ using AgroSolutions.Identity.Infrastructure.Persistence;
 using MediatR;
 using Serilog;
 
-namespace AgroSolutions.Identity.Application.Queries.GetUserById;
+namespace AgroSolutions.Identity.Application.Queries.GetUser;
 
-public class GetUserByIdQueryHandler(IUnitOfWork unitOfWork, INotificationContext notification) : IRequestHandler<GetUserByIdQuery, GetUserByIdResult?>
+public class GetUserQueryHandler(IUnitOfWork unitOfWork, INotificationContext notification) : IRequestHandler<GetUserQuery, GetUserQueryResult?>
 {
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly INotificationContext _notification = notification;
 
-    public async Task<GetUserByIdResult?> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
+    public async Task<GetUserQueryResult?> Handle(GetUserQuery request, CancellationToken cancellationToken)
     {
         Log.Information("Starting the search for user data by ID.");
 

@@ -6,9 +6,9 @@ public class RabbitChannelFactory(IRabbitConnectionProvider provider) : IMessagi
 {
     private readonly IRabbitConnectionProvider _provider = provider;
 
-    public async Task<IChannel> CreateChannelAsync()
+    public async Task<IChannel> CreateChannelAsync(CancellationToken cancellationToken)
     {
-        IConnection connection = await _provider.GetConnectionAsync();
-        return await connection.CreateChannelAsync();
+        IConnection connection = await _provider.GetConnectionAsync(cancellationToken);
+        return await connection.CreateChannelAsync(cancellationToken: cancellationToken);
     }
 }

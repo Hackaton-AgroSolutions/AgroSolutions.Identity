@@ -1,4 +1,4 @@
-﻿using AgroSolutions.Identity.Application.Queries.GetUserByEmailAndPassword;
+﻿using AgroSolutions.Identity.Application.Queries.AuthenticateUser;
 using FluentAssertions;
 using FluentValidation;
 using FluentValidation.Results;
@@ -11,10 +11,10 @@ public class GetUserByEmailAndPasswordQueryTests
     public void Should_BeValid_WhenQueryIsValid()
     {
         // Arrange
-        GetUserByEmailAndPasswordQuery getUserByEmailAndPasswordQuery = new("validEmail@gmail.com", "password1234$$");
+        AuthenticateUserQuery getUserByEmailAndPasswordQuery = new("validEmail@gmail.com", "password1234$$");
 
         // Act
-        ValidationResult result = new GetUserByEmailAndPasswordQueryValidator().Validate(getUserByEmailAndPasswordQuery);
+        ValidationResult result = new AuthenticateUserQueryValidator().Validate(getUserByEmailAndPasswordQuery);
 
         // Assert
         result.IsValid.Should().BeTrue();
@@ -25,10 +25,10 @@ public class GetUserByEmailAndPasswordQueryTests
     public void Should_BeInvalid_WhenQueryIsInvalid()
     {
         // Arrange
-        GetUserByEmailAndPasswordQuery getUserByEmailAndPasswordQuery = new("invalidEmail", "invalidPassword");
+        AuthenticateUserQuery getUserByEmailAndPasswordQuery = new("invalidEmail", "invalidPassword");
 
         // Act
-        ValidationResult result = new GetUserByEmailAndPasswordQueryValidator().Validate(getUserByEmailAndPasswordQuery);
+        ValidationResult result = new AuthenticateUserQueryValidator().Validate(getUserByEmailAndPasswordQuery);
 
         // Assert
         result.IsValid.Should().BeFalse();
@@ -39,14 +39,14 @@ public class GetUserByEmailAndPasswordQueryTests
     public void Should_HavePasswordError_WhenPasswordIsInvalid()
     {
         // Arrange
-        GetUserByEmailAndPasswordQuery getUserByEmailAndPasswordQuery = new("validEmail@gmail.com", "invalidPassword");
+        AuthenticateUserQuery getUserByEmailAndPasswordQuery = new("validEmail@gmail.com", "invalidPassword");
 
         // Act
-        ValidationResult result = new GetUserByEmailAndPasswordQueryValidator().Validate(getUserByEmailAndPasswordQuery);
+        ValidationResult result = new AuthenticateUserQueryValidator().Validate(getUserByEmailAndPasswordQuery);
 
         // Assert
         result.IsValid.Should().BeFalse();
-        result.Errors.Where(e => e.PropertyName != nameof(GetUserByEmailAndPasswordQuery.Password)).Should().BeEmpty();
-        result.Errors.Where(e => e.PropertyName == nameof(GetUserByEmailAndPasswordQuery.Password)).Should().HaveCount(1);
+        result.Errors.Where(e => e.PropertyName != nameof(AuthenticateUserQuery.Password)).Should().BeEmpty();
+        result.Errors.Where(e => e.PropertyName == nameof(AuthenticateUserQuery.Password)).Should().HaveCount(1);
     }
 }

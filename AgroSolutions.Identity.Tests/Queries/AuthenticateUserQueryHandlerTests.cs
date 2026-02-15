@@ -1,5 +1,5 @@
 ﻿using AgroSolutions.Identity.Application.DTOs;
-using AgroSolutions.Identity.Application.Queries.GetUserByEmailAndPassword;
+using AgroSolutions.Identity.Application.Queries.AuthenticateUser;
 using AgroSolutions.Identity.Domain.Entities;
 using AgroSolutions.Identity.Domain.Notifications;
 using AgroSolutions.Identity.Domain.Repositories;
@@ -10,15 +10,15 @@ using Moq;
 
 namespace AgroSolutions.Identity.Tests.Queries;
 
-public class GetUserByEmailAndPasswordQueryHandlerTests
+public class AuthenticateUserQueryHandlerTests
 {
     private readonly Mock<INotificationContext> _notificationContext = new();
     private readonly Mock<IUnitOfWork> _unitOfWork = new();
     private readonly Mock<IAuthService> _authService = new();
     private readonly Mock<IUserRepository> _userRepository = new();
-    private readonly GetUserByEmailAndPasswordQueryHandler _queryHandler;
+    private readonly AuthenticateUserQueryHandler _queryHandler;
 
-    public GetUserByEmailAndPasswordQueryHandlerTests()
+    public AuthenticateUserQueryHandlerTests()
     {
         _unitOfWork.Setup(u => u.Users).Returns(_userRepository.Object);
         _queryHandler = new(
@@ -32,7 +32,7 @@ public class GetUserByEmailAndPasswordQueryHandlerTests
     public async Task Should_ReturnToken_WhenEmailAndPasswordMatchs()
     {
         // Arrange
-        GetUserByEmailAndPasswordQuery getUserByEmailAndPasswordQuery = new("validEmail@gmail.com", "password1234$$");
+        AuthenticateUserQuery getUserByEmailAndPasswordQuery = new("validEmail@gmail.com", "password1234$$");
         User userDb = new(1, "Valid name user", "validEmail@gmail.com", "$2a$12$2Dj1BaOnV8X0ej7U0KIOjOneac1OOcv9L8rhoIbOgSiafuPPnwQIi");
         _unitOfWork.Setup(u => u.Users.GetByEmailNoTrackingAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(userDb);
         _authService.Setup(a => a.GenerateToken(userDb)).Returns("eyJb");
@@ -53,7 +53,7 @@ public class GetUserByEmailAndPasswordQueryHandlerTests
     public async Task Should_ReturnNullAndNotify_WhenEmailAndPasswordDontMatches()
     {
         // Arrange
-        GetUserByEmailAndPasswordQuery getUserByEmailAndPasswordQuery = new("validEmail@gmail.com", "wrong password");
+        AuthenticateUserQuery getUserByEmailAndPasswordQuery = new("validEmail@gmail.com", "wrong password");
         User userDb = new(1, "Valid name user", "validEmail@gmail.com", "$2a$12$2Dj1BaOnV8X0ej7U0KIOjOneac1OOcv9L8rhoIbOgSiafuPPnwQIi");
         _unitOfWork.Setup(u => u.Users.GetByEmailNoTrackingAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(userDb);
 
