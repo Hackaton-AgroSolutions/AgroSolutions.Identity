@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using AgroSolutions.Identity.Application.Validators;
+using FluentValidation;
 using Serilog;
 
 namespace AgroSolutions.Identity.Application.Commands.DeleteUser;
@@ -11,7 +12,6 @@ public class DeleteUserCommandValidator : AbstractValidator<DeleteUserCommand>
 
         RuleLevelCascadeMode = CascadeMode.Stop;
 
-        RuleFor(user => user.UserId)
-            .GreaterThan(0).WithMessage("The user identifier is invalid");
+        RuleFor(c => c.UserId).ValidUserId();
     }
 }

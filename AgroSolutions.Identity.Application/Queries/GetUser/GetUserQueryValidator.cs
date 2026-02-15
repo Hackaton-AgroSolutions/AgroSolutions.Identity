@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using AgroSolutions.Identity.Application.Validators;
+using FluentValidation;
 using Serilog;
 
 namespace AgroSolutions.Identity.Application.Queries.GetUser;
@@ -11,7 +12,6 @@ public class GetUserQueryValidator : AbstractValidator<GetUserQuery>
 
         RuleLevelCascadeMode = CascadeMode.Stop;
 
-        RuleFor(user => user.UserId)
-            .GreaterThan(0).WithMessage("The user identifier is invalid");
+        RuleFor(q => q.UserId).ValidUserId();
     }
 }
