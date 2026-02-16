@@ -41,14 +41,6 @@ jobs:
           docker push ${{ env.DOCKERHUB_USER }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
 
       # =========================
-      # Apply Kubernetes Manifests
-      # =========================
-      - name: Deploy to Kubernetes
-        run: |
-          cd $env:GITHUB_WORKSPACE
-          kubectl apply -f k8s/
-
-      # =========================
       # Minikube Start
       # =========================
       - name: Start Minikube
@@ -57,6 +49,14 @@ jobs:
           if ($status -ne "Running") {
             minikube start --driver=docker
           }
+
+      # =========================
+      # Apply Kubernetes Manifests
+      # =========================
+      - name: Deploy to Kubernetes
+        run: |
+          cd $env:GITHUB_WORKSPACE
+          kubectl apply -f k8s/
 
       # =========================
       # Wait pods
