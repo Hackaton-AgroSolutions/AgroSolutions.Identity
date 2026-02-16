@@ -1,6 +1,5 @@
 ﻿using AgroSolutions.Identity.Application.Queries.ValidateToken;
 using AgroSolutions.Identity.Domain.Notifications;
-using AgroSolutions.Identity.Domain.Repositories;
 using AgroSolutions.Identity.Infrastructure.Persistence;
 using FluentAssertions;
 using MediatR;
@@ -14,13 +13,11 @@ public class ValidateTokenQueryHandlerTests
     private readonly Mock<INotificationContext> _notificationContext = new();
     //private readonly INotificationContext _notificationContext = new NotificationContext();
     private readonly Mock<IUnitOfWork> _unitOfWork = new();
-    private readonly Mock<IUserRepository> _userRepository = new();
     private readonly IMemoryCache _memoryCache = new MemoryCache(new MemoryCacheOptions());
     private readonly ValidateTokenQueryHandler _queryHandler;
 
     public ValidateTokenQueryHandlerTests()
     {
-        _unitOfWork.Setup(u => u.Users).Returns(_userRepository.Object);
         _queryHandler = new(_unitOfWork.Object, _notificationContext.Object, _memoryCache);
     }
 

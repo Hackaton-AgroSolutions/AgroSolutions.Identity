@@ -2,7 +2,6 @@
 using AgroSolutions.Identity.Application.Queries.AuthenticateUser;
 using AgroSolutions.Identity.Domain.Entities;
 using AgroSolutions.Identity.Domain.Notifications;
-using AgroSolutions.Identity.Domain.Repositories;
 using AgroSolutions.Identity.Domain.Service;
 using AgroSolutions.Identity.Infrastructure.Persistence;
 using FluentAssertions;
@@ -15,12 +14,10 @@ public class AuthenticateUserQueryHandlerTests
     private readonly Mock<INotificationContext> _notificationContext = new();
     private readonly Mock<IUnitOfWork> _unitOfWork = new();
     private readonly Mock<IAuthService> _authService = new();
-    private readonly Mock<IUserRepository> _userRepository = new();
     private readonly AuthenticateUserQueryHandler _queryHandler;
 
     public AuthenticateUserQueryHandlerTests()
     {
-        _unitOfWork.Setup(u => u.Users).Returns(_userRepository.Object);
         _queryHandler = new(
             _unitOfWork.Object,
             _authService.Object,

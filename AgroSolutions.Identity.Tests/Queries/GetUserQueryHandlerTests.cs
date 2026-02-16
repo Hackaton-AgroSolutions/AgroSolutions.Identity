@@ -1,7 +1,6 @@
 ﻿using AgroSolutions.Identity.Application.Queries.GetUser;
 using AgroSolutions.Identity.Domain.Entities;
 using AgroSolutions.Identity.Domain.Notifications;
-using AgroSolutions.Identity.Domain.Repositories;
 using AgroSolutions.Identity.Infrastructure.Persistence;
 using FluentAssertions;
 using Moq;
@@ -12,12 +11,10 @@ public class GetUserQueryHandlerTests
 {
     private readonly Mock<INotificationContext> _notificationContext = new();
     private readonly Mock<IUnitOfWork> _unitOfWork = new();
-    private readonly Mock<IUserRepository> _userRepository = new();
     private readonly GetUserQueryHandler _queryHandler;
 
     public GetUserQueryHandlerTests()
     {
-        _unitOfWork.Setup(u => u.Users).Returns(_userRepository.Object);
         _queryHandler = new(_unitOfWork.Object, _notificationContext.Object);
     }
 
