@@ -1,10 +1,11 @@
 ﻿using AgroSolutions.Identity.Application.Commands.DeleteUser;
+using AgroSolutions.Identity.Application.Validators;
 using FluentAssertions;
 using FluentValidation.Results;
 
 namespace AgroSolutions.Identity.Tests.Validators;
 
-public class DeleteUserCommandTests
+public class DeleteUserCommandValidatorTests
 {
     [Fact(DisplayName = "Valid command should pass validation")]
     public void Should_BeValid_WhenCommandIsValid()
@@ -31,7 +32,7 @@ public class DeleteUserCommandTests
 
         // Assert
         result.IsValid.Should().BeFalse();
-        result.Errors.Where(e => e.PropertyName != nameof(DeleteUserCommand.UserId)).Should().BeEmpty();
-        result.Errors.Where(e => e.PropertyName == nameof(DeleteUserCommand.UserId)).Should().HaveCount(1);
+        result.Errors.Should().HaveCount(1);
+        result.Errors.Count(e => e.ErrorMessage == UserFieldsValidationExtensions.MESSAGE_INVALID_USERID).Should().Be(1);
     }
 }

@@ -16,14 +16,12 @@ public class DeleteUserCommandHandlerTests
 {
     private readonly Mock<INotificationContext> _notificationContext = new();
     private readonly Mock<IUnitOfWork> _unitOfWork = new();
-    private readonly Mock<IUserRepository> _userRepository = new();
     private readonly Mock<IEventPublisher> _eventPublisher = new();
     private readonly Mock<IMemoryCache> _memoryCache = new();
     private readonly DeleteUserCommandHandler _commandHandler;
 
     public DeleteUserCommandHandlerTests()
     {
-        _unitOfWork.Setup(u => u.Users).Returns(_userRepository.Object);
         _commandHandler = new(
             _notificationContext.Object,
             _unitOfWork.Object,
@@ -55,7 +53,6 @@ public class DeleteUserCommandHandlerTests
     {
         // Arrange
         DeleteUserCommand deleteUserCommand = new(1);
-        User userDb = new(1, "Old name user", "oldValidEmail@gmail.com");
         _unitOfWork.Setup(u => u.Users.GetByIdTrackingAsync(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync((User?)null);
 
         // Act

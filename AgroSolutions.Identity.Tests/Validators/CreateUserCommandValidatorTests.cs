@@ -1,11 +1,12 @@
 ﻿using AgroSolutions.Identity.Application.Commands.CreateUser;
 using AgroSolutions.Identity.Application.Commands.UpdateUser;
+using AgroSolutions.Identity.Application.Validators;
 using FluentAssertions;
 using FluentValidation.Results;
 
 namespace AgroSolutions.Identity.Tests.Validators;
 
-public class CreateUserCommandTests
+public class CreateUserCommandValidatorTests
 {
     [Fact(DisplayName = "Valid command should pass validation")]
     public void Should_BeValid_WhenCommandIsValid()
@@ -32,11 +33,10 @@ public class CreateUserCommandTests
 
         // Assert
         result.IsValid.Should().BeFalse();
-        result.Errors.Where(e =>
-            e.PropertyName == nameof(CreateUserCommand.Name) ||
-            e.PropertyName == nameof(CreateUserCommand.Email) ||
-            e.PropertyName == nameof(CreateUserCommand.Password)
-        ).Should().HaveCount(3);
+        result.Errors.Should().HaveCount(3);
+        result.Errors.Count(e => e.ErrorMessage == UserFieldsValidationExtensions.MESSAGE_INVALID_LENGTH_USERNAME).Should().Be(1);
+        result.Errors.Count(e => e.ErrorMessage == UserFieldsValidationExtensions.MESSAGE_INVALID_USEREMAIL).Should().Be(1);
+        result.Errors.Count(e => e.ErrorMessage == UserFieldsValidationExtensions.MESSAGE_INVALID_USERPASSWORD).Should().Be(1);
     }
 
     [Fact(DisplayName = "Invalid email should return email validation error")]
@@ -50,7 +50,7 @@ public class CreateUserCommandTests
 
         // Assert
         result.IsValid.Should().BeFalse();
-        result.Errors.Where(e => e.PropertyName != nameof(UpdateUserCommand.Email)).Should().BeEmpty();
-        result.Errors.Where(e => e.PropertyName == nameof(UpdateUserCommand.Email)).Should().HaveCount(1);
+        result.Errors.Should().HaveCount(1);
+        result.Errors.Count(e => e.ErrorMessage == UserFieldsValidationExtensions.MESSAGE_INVALID_USEREMAIL).Should().Be(1);
     }
 }

@@ -15,12 +15,10 @@ public class UpdateUserCommandHandlerTests
     private readonly Mock<INotificationContext> _notificationContext = new();
     private readonly Mock<IUnitOfWork> _unitOfWork = new();
     private readonly Mock<IAuthService> _authService = new();
-    private readonly Mock<IUserRepository> _userRepository = new();
     private readonly UpdateUserCommandHandler _commandHandler;
 
     public UpdateUserCommandHandlerTests()
     {
-        _unitOfWork.Setup(u => u.Users).Returns(_userRepository.Object);
         _commandHandler = new(
             _notificationContext.Object,
             _unitOfWork.Object,

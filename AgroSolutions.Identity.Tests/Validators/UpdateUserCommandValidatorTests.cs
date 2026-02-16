@@ -1,11 +1,12 @@
 ﻿using AgroSolutions.Identity.Application.Commands.UpdateUser;
+using AgroSolutions.Identity.Application.Validators;
 using FluentAssertions;
 using FluentValidation;
 using FluentValidation.Results;
 
 namespace AgroSolutions.Identity.Tests.Validators;
 
-public class UpdateUserCommandTests
+public class UpdateUserCommandValidatorTests
 {
     [Fact(DisplayName = "Valid command should pass validation")]
     public void Should_BeValid_WhenCommandIsValid()
@@ -32,11 +33,10 @@ public class UpdateUserCommandTests
 
         // Assert
         result.IsValid.Should().BeFalse();
-        result.Errors.Where(e =>
-            e.PropertyName == nameof(UpdateUserCommand.UserId) ||
-            e.PropertyName == nameof(UpdateUserCommand.Name) ||
-            e.PropertyName == nameof(UpdateUserCommand.Email)
-        ).Should().HaveCount(3);
+        result.Errors.Should().HaveCount(3);
+        result.Errors.Count(e => e.ErrorMessage == UserFieldsValidationExtensions.MESSAGE_INVALID_USERID).Should().Be(1);
+        result.Errors.Count(e => e.ErrorMessage == UserFieldsValidationExtensions.MESSAGE_INVALID_LENGTH_USERNAME).Should().Be(1);
+        result.Errors.Count(e => e.ErrorMessage == UserFieldsValidationExtensions.MESSAGE_INVALID_USEREMAIL).Should().Be(1);
     }
 
     [Fact(DisplayName = "Invalid user Id should return user id validation error")]
@@ -50,7 +50,7 @@ public class UpdateUserCommandTests
 
         // Assert
         result.IsValid.Should().BeFalse();
-        result.Errors.Where(e => e.PropertyName != nameof(UpdateUserCommand.UserId)).Should().BeEmpty();
-        result.Errors.Where(e => e.PropertyName == nameof(UpdateUserCommand.UserId)).Should().HaveCount(1);
+        result.Errors.Should().HaveCount(1);
+        result.Errors.Count(e => e.ErrorMessage == UserFieldsValidationExtensions.MESSAGE_INVALID_USERID).Should().Be(1);
     }
 }

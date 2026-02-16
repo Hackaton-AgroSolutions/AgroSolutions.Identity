@@ -1,19 +1,21 @@
 ﻿using AgroSolutions.Identity.Application.Queries.GetUser;
+using AgroSolutions.Identity.Application.Queries.ValidateToken;
+using AgroSolutions.Identity.Application.Validators;
 using FluentAssertions;
 using FluentValidation.Results;
 
 namespace AgroSolutions.Identity.Tests.Validators;
 
-public class GetUserByIdQueryTests
+public class ValidateTokenQueryValidatorTests
 {
     [Fact(DisplayName = "Valid query should pass validation")]
     public void Should_BeValid_WhenQueryIsValid()
     {
         // Arrange
-        GetUserQuery getUserByIdQuery = new(1);
+        ValidateTokenQuery validateTokenQuery = new(1);
 
         // Act
-        ValidationResult result = new GetUserQueryValidator().Validate(getUserByIdQuery);
+        ValidationResult result = new ValidateTokenQueryValidator().Validate(validateTokenQuery);
 
         // Assert
         result.IsValid.Should().BeTrue();
@@ -32,5 +34,6 @@ public class GetUserByIdQueryTests
         // Assert
         result.IsValid.Should().BeFalse();
         result.Errors.Should().HaveCount(1);
+        result.Errors.Count(e => e.ErrorMessage == UserFieldsValidationExtensions.MESSAGE_INVALID_USERID).Should().Be(1);
     }
 }
