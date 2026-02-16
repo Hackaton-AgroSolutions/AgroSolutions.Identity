@@ -1,11 +1,8 @@
-﻿using AgroSolutions.Identity.Application.Commands.UpdateUser;
-using AgroSolutions.Identity.Domain.Entities;
-using FluentValidation;
-using System.Data;
+﻿using FluentValidation;
 
 namespace AgroSolutions.Identity.Application.Validators;
 
-public static class UserValidationExtensions
+public static class UserFieldsValidationExtensions
 {
     extension<T>(IRuleBuilder<T, int> rule)
     {
