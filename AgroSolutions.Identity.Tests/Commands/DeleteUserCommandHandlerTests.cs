@@ -3,7 +3,6 @@ using AgroSolutions.Identity.Domain.Common;
 using AgroSolutions.Identity.Domain.Entities;
 using AgroSolutions.Identity.Domain.Messaging;
 using AgroSolutions.Identity.Domain.Notifications;
-using AgroSolutions.Identity.Domain.Repositories;
 using AgroSolutions.Identity.Infrastructure.Persistence;
 using FluentAssertions;
 using MediatR;

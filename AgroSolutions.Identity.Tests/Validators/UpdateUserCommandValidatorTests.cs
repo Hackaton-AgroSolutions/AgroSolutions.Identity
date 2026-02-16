@@ -1,7 +1,6 @@
 ﻿using AgroSolutions.Identity.Application.Commands.UpdateUser;
 using AgroSolutions.Identity.Application.Validators;
 using FluentAssertions;
-using FluentValidation;
 using FluentValidation.Results;
 
 namespace AgroSolutions.Identity.Tests.Validators;
