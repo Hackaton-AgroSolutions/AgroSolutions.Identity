@@ -6,9 +6,9 @@ data:
   ASPNETCORE_URLS: http://+:8080
   Messaging__Host: rabbitmq
   Messaging__Port: "5672"
-  Messaging__Exchange: "agro-solutions.exchange"
-  Messaging__Destinations__0__Id: "DELETED_USER"
-  Messaging__Destinations__0__Queue: "deleted-user"
-  Messaging__Destinations__0__RoutingKey: "deleted.user"
+  Messaging__Exchange: agro-solutions.exchange
+  Messaging__Destinations__0__Id: DELETED_USER
+  Messaging__Destinations__0__Queue: deleted-user
+  Messaging__Destinations__0__RoutingKey: deleted.user
   Jwt__Issuer: AgroSolutions.Identity
   Jwt__Audience: ClientsAgroSolutions
