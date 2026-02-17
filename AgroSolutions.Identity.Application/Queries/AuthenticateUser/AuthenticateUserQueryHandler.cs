@@ -29,6 +29,7 @@ public class AuthenticateUserQueryHandler(IUnitOfWork unitOfWork, IAuthService a
         Log.Information("Generating a token for the user with ID {UserId} upon login.", user.UserId);
         string token = _authService.GenerateToken(user);
 
+        Log.Information("Finished the user login.");
         return new(token);
     }
 }

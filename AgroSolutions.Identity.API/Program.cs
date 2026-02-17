@@ -67,9 +67,10 @@ builder.Services.AddOpenApi();
 
 WebApplication app = builder.Build();
 
-#region Ensures the database is created at startup.
 using AsyncServiceScope asyncServiceScope = app.Services.CreateAsyncScope();
 IServiceProvider services = asyncServiceScope.ServiceProvider;
+
+#region Ensures the database is created at startup.
 try
 {
     AgroSolutionsIdentityDbContext context = services.GetRequiredService<AgroSolutionsIdentityDbContext>();
@@ -78,7 +79,7 @@ try
 }
 catch (Exception ex)
 {
-    Log.Fatal(ex, "Error during database initialization");
+    Log.Fatal(ex, "Error during database initialization.");
 }
 #endregion
 
@@ -91,7 +92,7 @@ try
 }
 catch (Exception ex)
 {
-    Log.Fatal(ex, "Error during messaging initialization");
+    Log.Fatal(ex, "Error during messaging initialization.");
 }
 #endregion
 

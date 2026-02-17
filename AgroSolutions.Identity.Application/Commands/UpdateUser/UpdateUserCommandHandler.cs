@@ -41,6 +41,7 @@ public class UpdateUserCommandHandler(INotificationContext notification, IUnitOf
         string token = _authService.GenerateToken(user);
         await _unitOfWork.CommitAsync(cancellationToken);
 
+        Log.Information("Finished the user data update.");
         return new(token);
     }
 }

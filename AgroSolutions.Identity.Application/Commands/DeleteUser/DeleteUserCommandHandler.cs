@@ -22,7 +22,7 @@ public class DeleteUserCommandHandler(
 
     public async Task<Unit?> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
     {
-        Log.Information("Initiating user deletion.");
+        Log.Information("Starting user deletion.");
 
         User? user = await _unitOfWork.Users.GetByIdTrackingAsync(request.UserId, cancellationToken);
         if (user is null)
@@ -42,6 +42,8 @@ public class DeleteUserCommandHandler(
         _memoryCache.Remove(user.UserId);
 
         Log.Information("User deletion process with full ID {UserId}.", user.UserId);
+
+        Log.Information("Finished user deletion.");
         return Unit.Value;
     }
 }

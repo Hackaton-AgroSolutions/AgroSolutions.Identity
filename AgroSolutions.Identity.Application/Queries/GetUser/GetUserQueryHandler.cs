@@ -13,7 +13,7 @@ public class GetUserQueryHandler(IUnitOfWork unitOfWork, INotificationContext no
 
     public async Task<GetUserQueryResult?> Handle(GetUserQuery request, CancellationToken cancellationToken)
     {
-        Log.Information("Starting the search for user data by ID.");
+        Log.Information("Starting the search for user.");
 
         User? user = await _unitOfWork.Users.GetByIdNoTrackingAsync(request.UserId, cancellationToken);
         if (user is null)
@@ -24,6 +24,8 @@ public class GetUserQueryHandler(IUnitOfWork unitOfWork, INotificationContext no
         }
 
         Log.Information("User with ID {UserId} found.", request.UserId);
+
+        Log.Information("Finished the search for user.");
         return new(user.UserId, user.Name, user.Email);
     }
 }

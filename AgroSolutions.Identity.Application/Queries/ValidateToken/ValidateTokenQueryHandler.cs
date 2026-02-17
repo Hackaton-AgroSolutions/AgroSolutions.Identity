@@ -14,6 +14,8 @@ public class ValidateTokenQueryHandler(IUnitOfWork unitOfWork, INotificationCont
 
     public async Task<Unit?> Handle(ValidateTokenQuery request, CancellationToken cancellationToken)
     {
+        Log.Information("Starting the validation of token.");
+
         int? userId = _memoryCache.Get<int?>(request.UserId);
         if (userId is null)
         {
@@ -29,6 +31,7 @@ public class ValidateTokenQueryHandler(IUnitOfWork unitOfWork, INotificationCont
             _memoryCache.Set(request.UserId, request.UserId);
         }
 
+        Log.Information("Finished the validation of token.");
         return Unit.Value;
     }
 }

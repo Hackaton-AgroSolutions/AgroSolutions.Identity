@@ -43,6 +43,7 @@ public class CreateUserCommandHandler(
         Log.Information("Generating a new token for the updated data for the user with ID {UserId}.", user.UserId);
         string token = _authService.GenerateToken(user);
 
+        Log.Information("Finished user creation.");
         return new(token);
     }
 }
