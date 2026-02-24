@@ -89,7 +89,7 @@ builder.Services.AddOpenTelemetry()
             })
             .AddSqlClientInstrumentation(options => options.RecordException = true);
 
-        string otlpEndpoint = builder.Configuration["Trace:OtlpUrl"]!;
+        string otlpEndpoint = builder.Configuration["Trace:Url"]!;
         tpb.AddOtlpExporter(options =>
         {
             options.Endpoint = new(otlpEndpoint);
