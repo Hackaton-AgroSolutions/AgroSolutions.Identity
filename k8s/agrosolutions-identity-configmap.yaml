@@ -4,6 +4,7 @@ metadata:
   name: agrosolutions-identity-config
 data:
   ASPNETCORE_URLS: http://+:8080
+  Trace__Url: http://grafana-tempo:4317
   Messaging__Host: rabbitmq
   Messaging__Port: "5672"
   Messaging__Exchange: agro-solutions.exchange
