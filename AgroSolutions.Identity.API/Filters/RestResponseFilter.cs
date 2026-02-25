@@ -20,8 +20,14 @@ public class RestResponseFilter(INotificationContext notification) : IAsyncResul
             return;
         }
 
-        if ((context.Result is NoContentResult || context.Result is AcceptedResult) && _notification.HasNotifications)
+        if (context.Result is NoContentResult || context.Result is AcceptedResult)
         {
+            if (!_notification.HasNotifications)
+            {
+                await next();
+                return;
+            }
+
             context.Result = new ObjectResult(new RestResponse { Notifications = _notification.AsListString })
             {
                 StatusCode = MapStatusCode(_notification.Notifications)
