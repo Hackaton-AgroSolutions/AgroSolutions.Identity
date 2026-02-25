@@ -91,7 +91,7 @@ otel.ConfigureResource(resource =>
 });
 
 otel.WithMetrics(metrics => metrics
-    .AddOtlpExporter(otlpOptions => otlpOptions.Endpoint = new Uri(builder.Configuration["Jaeger:Url"]!))
+    .AddOtlpExporter(otlpOptions => otlpOptions.Endpoint = new Uri(builder.Configuration["Jeager:Url"]!))
     .AddAspNetCoreInstrumentation()
     .AddMeter(APP_NAME)
     .AddMeter("Microsoft.AspNetCore.Hosting")
@@ -101,7 +101,7 @@ otel.WithTracing(tracing =>
 {
     tracing.AddAspNetCoreInstrumentation();
     tracing.AddSource(APP_NAME);
-    tracing.AddOtlpExporter(otlpOptions => otlpOptions.Endpoint = new Uri(builder.Configuration["Jaeger:Url"]!));
+    tracing.AddOtlpExporter(otlpOptions => otlpOptions.Endpoint = new Uri(builder.Configuration["Jeager:Url"]!));
 });
 
 WebApplication app = builder.Build();
