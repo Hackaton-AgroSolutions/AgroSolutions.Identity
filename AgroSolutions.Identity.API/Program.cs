@@ -8,10 +8,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi;
-using OpenTelemetry;
-using OpenTelemetry.Metrics;
-using OpenTelemetry.Resources;
-using OpenTelemetry.Trace;
 using Prometheus;
 using Serilog;
 using Serilog.Sinks.Grafana.Loki;
@@ -78,31 +74,6 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 builder.Services.AddOpenApi();
-
-OpenTelemetryBuilder otel = builder.Services.AddOpenTelemetry();
-
-otel.ConfigureResource(resource =>
-{
-    resource.AddService(serviceName: APP_NAME);
-    resource.AddAttributes([
-        new KeyValuePair<string, object>("env", builder.Configuration["ASPNETCORE_ENVIRONMENT"] == "env" ? "env" : "prod"),
-        new KeyValuePair<string, object>("appName", APP_NAME)
-    ]);
-});
-
-otel.WithMetrics(metrics => metrics
-    .AddOtlpExporter(otlpOptions => otlpOptions.Endpoint = new Uri(builder.Configuration["Jaeger:Url"]!))
-    .AddAspNetCoreInstrumentation()
-    .AddMeter(APP_NAME)
-    .AddMeter("Microsoft.AspNetCore.Hosting")
-    .AddMeter("Microsoft.AspNetCore.Server.Kestrel"));
-
-otel.WithTracing(tracing =>
-{
-    tracing.AddAspNetCoreInstrumentation();
-    tracing.AddSource(APP_NAME);
-    tracing.AddOtlpExporter(otlpOptions => otlpOptions.Endpoint = new Uri(builder.Configuration["Jaeger:Url"]!));
-});
 
 WebApplication app = builder.Build();
 
