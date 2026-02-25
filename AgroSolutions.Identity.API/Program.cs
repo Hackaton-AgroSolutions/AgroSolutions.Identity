@@ -16,9 +16,14 @@ using Serilog.Sinks.Grafana.Loki;
 
 Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext()
-    .Enrich.WithProperty("Service", "agro-solution-identity-api")
     .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] (CorrelationId={CorrelationId}) {Message:lj} {NewLine}{Exception}")
-    .WriteTo.GrafanaLoki("http://loki:3100")
+    .WriteTo.GrafanaLoki("http://loki:3100", [
+        new()
+        {
+            Key = "app",
+            Value = "agro-solution-identity-api"
+        }
+    ])
     .CreateLogger();
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -89,12 +94,15 @@ builder.Services.AddOpenTelemetry()
             })
             .AddSqlClientInstrumentation(options => options.RecordException = true);
 
-        string otlpEndpoint = builder.Configuration["Trace:Url"]!;
-        tpb.AddOtlpExporter(options =>
+        //if (builder.Configuration["Observability:UseOtlp"]?.ToLower() == "true")
         {
-            options.Endpoint = new(otlpEndpoint);
-            options.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.Grpc;
-        });
+            string otlpEndpoint = /*builder.Configuration["Observability:OtlpEndpoint"] ??*/ "http://grafana:3000";
+            tpb.AddOtlpExporter(options =>
+            {
+                options.Endpoint = new(otlpEndpoint);
+                options.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.Grpc;
+            });
+        }
 
         if (builder.Configuration["ASPNETCORE_ENVIRONMENT"] == "Development") tpb.AddConsoleExporter();
     });
