@@ -14,10 +14,13 @@ using Serilog.Sinks.Grafana.Loki;
 
 const string APP_NAME = "agro-solution-identity-api";
 
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+builder.Host.UseSerilog();
+
 Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext()
     .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] (CorrelationId={CorrelationId}) {Message:lj} {NewLine}{Exception}")
-    .WriteTo.GrafanaLoki("http://loki:3100", [
+    .WriteTo.GrafanaLoki(builder.Configuration["GrafanaLoki:Url"]!, [
         new()
         {
             Key = "app",
@@ -25,9 +28,6 @@ Log.Logger = new LoggerConfiguration()
         }
     ])
     .CreateLogger();
-
-WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-builder.Host.UseSerilog();
 
 builder.Services
     .AddInfrastructure(builder.Configuration)
