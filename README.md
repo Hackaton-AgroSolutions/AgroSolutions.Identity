@@ -21,39 +21,6 @@
 ## 🏗️ Desenho da Arquitetura
 IMAGEM AQUI
 
-## ▶️ Execução
-  - Via HTTP.sys:
-    - Navegue até o diretório da camada API da aplicação:
-    ```
-    cd ./AgroSolutions.Identity.API/
-    ```
-    - Insira o comando de execução do projeto:
-    ```
-    dotnet run --launch-profile https
-    ```
-    - Acesse [https://localhost:7132/swagger/index.html](https://localhost:7132/swagger/index.html)
-
-  - Via Kubernertes local (minikube/kind):
-    - Execute o comando para aplicar todos os arquivos yamls presentes no diretório:
-    ```
-    kubectl apply -f .\k8s\
-    ```
-    - Em seguida faça o PortForward:
-    ```
-    kubectl port-forward svc/agrosolutions-identity-api 8080:80
-    ```
-    - Acesse [https://localhost:8080/swagger/index.html](https://localhost:8080/swagger/index.html)
-
-### 🧪 Executar testes
-  - Navegue até o diretório dos testes:
-  ```
-  cd ./AgroSolutions.Identity.Tests/
-  ```
-  - E insira o comando de execução de testes:
-  ```
-  dotnet test
-  ```
-
 ## 🛠️ Detalhes Técnicos
 ### ⭐ Arquitetura e Padrões
  - Arquitetura orientada a eventos (Event-Driven Architecture – EDA);
@@ -94,6 +61,39 @@ IMAGEM AQUI
  - Docker para containerização;
  - Kubernetes (Deployments, Services, HPA, ConfigMaps e Secrets);
  - Kong API Gateway para gerenciamento e roteamento de APIs.
+
+### 🧪 Testes
+  - Navegue até o diretório dos testes:
+  ```
+  cd ./AgroSolutions.Identity.Tests/
+  ```
+  - E insira o comando de execução de testes:
+  ```
+  dotnet test
+  ```
+
+## ▶️ Execução
+  - Via HTTP.sys:
+    - Navegue até o diretório da camada API da aplicação:
+    ```
+    cd ./AgroSolutions.Identity.API/
+    ```
+    - Insira o comando de execução do projeto:
+    ```
+    dotnet run --launch-profile https
+    ```
+    - Acesse [https://localhost:7132/swagger/index.html](https://localhost:7132/swagger/index.html)
+
+  - Via Kubernertes local (minikube/kind):
+    - Execute o comando para aplicar todos os arquivos yamls presentes no diretório:
+    ```
+    kubectl apply -f .\k8s\
+    ```
+    - Em seguida faça o PortForward:
+    ```
+    kubectl port-forward svc/agrosolutions-identity-api 8080:80
+    ```
+    - Acesse [https://localhost:8080/swagger/index.html](https://localhost:8080/swagger/index.html)
 
 ## 🚀 Requisições para Kong API Gateway
 ```javascript
