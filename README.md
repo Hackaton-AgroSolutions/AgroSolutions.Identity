@@ -27,6 +27,7 @@ IMAGEM AQUI
  - Notification Pattern (Exceptionless);
  - Padrão CQRS (Command Query Responsibility Segregation);
  - Mediator Pattern com MediatR;
+ - Clean Architecture;
  - Unit of Work;
  - Arquitetura baseada em APIs REST;
  - Uso de Middlewares e Action Filters para cross-cutting concerns;
