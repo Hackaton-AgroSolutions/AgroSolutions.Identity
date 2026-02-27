@@ -4,7 +4,6 @@ metadata:
   name: agrosolutions-identity-config
 data:
   ASPNETCORE_URLS: http://+:8080
-  Jaeger__Url: http://jaeger:16686
   Messaging__Host: rabbitmq
   Messaging__Port: "5672"
   Messaging__Exchange: agro-solutions.exchange
@@ -13,3 +12,4 @@ data:
   Messaging__Destinations__0__RoutingKey: deleted.user
   Jwt__Issuer: AgroSolutions.Identity
   Jwt__Audience: ClientsAgroSolutions
+  GrafanaLoki__Url: http://loki:3100
