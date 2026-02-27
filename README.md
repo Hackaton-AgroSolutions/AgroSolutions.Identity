@@ -94,7 +94,7 @@ IMAGEM AQUI
     ```
     kubectl port-forward svc/agrosolutions-identity-api 8080:80
     ```
-    - Acesse [https://localhost:8080/swagger/index.html](https://localhost:8080/swagger/index.html)
+    - Acesse [http://localhost:8080/swagger/index.html](http://localhost:8080/swagger/index.html)
 
 ## 🚀 Requisições para Kong API Gateway
 ```javascript
