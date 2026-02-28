@@ -39,6 +39,8 @@
  - Entity Framework Core;
  - FluentValidation para validações robustas;
  - Autenticação e autorização via JWT;
+ - MemoryCache;
+ - Padrão Cache Aside;
  - Documentação de APIs com Swagger / OpenAPI.
 
 ### 🗄️ Banco de Dados & Mensageria
