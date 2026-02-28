@@ -11,7 +11,6 @@ namespace AgroSolutions.Identity.Tests.Queries;
 
 public class AuthenticateUserQueryHandlerTests
 {
-
     private readonly Mock<INotificationContext> _notificationContext = new();
     private readonly Mock<IUnitOfWork> _unitOfWork = new();
     private readonly Mock<IAuthService> _authService = new();
