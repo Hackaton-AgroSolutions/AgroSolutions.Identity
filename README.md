@@ -19,7 +19,7 @@
   - O sistema garante atualizações contínuas do artefeto de produção com fluxos de integração e entrega contínua.
 
 ## 🏗️ Desenho da Arquitetura
-IMAGEM AQUI
+<img width="4123" height="4559" alt="Diagrama" src="https://github.com/user-attachments/assets/71eff8d1-67e7-42bf-9005-11694eaa4f83" />
 
 ## 🛠️ Detalhes Técnicos
 ### ⭐ Arquitetura e Padrões
